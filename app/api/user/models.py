@@ -71,6 +71,7 @@ class User(AbstractUser, BaseModel):
     major1 = models.CharField(max_length=254, blank=True)
     major2 = models.CharField(max_length=255, blank=True)
     standard = models.BooleanField(default=False)
+    group = models.IntegerField(blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "grade", "grade_letter"]

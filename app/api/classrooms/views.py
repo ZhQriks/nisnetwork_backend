@@ -22,21 +22,32 @@ class ClassroomViewSet(viewsets.ViewSet):
     def get_classes(self, request):
         group_number = request.query_params.get('group_number')
         week_day = request.query_params.get('week_day')
-        classes = ClassroomSchedule.objects.all()
+        grade = request.query_params.get('grade')
+        grade_letter = request.query_params.get('grade_letter')
+        classes = Classroom.objects.all()
 
-        if group_number is not None:
-            classes = classes.filter(group_number=group_number)
+        if group_number:
+            if group_number == '1':
+                classes = classes.exclude(group_number='2')
+            elif group_number == '2':
+                classes = classes.exclude(group_number='1')
+            else:
+                classes = classes.filter(group_number=group_number)
         if week_day is not None:
             classes = classes.filter(week_day=week_day)
+        if grade is not None:
+            classes = classes.filter(grade=grade)
+        if grade_letter is not None:
+            classes = classes.filter(grade_letter=grade_letter)
 
-        class_serializer = ClassroomScheduleSerializer(classes, many=True)
+        class_serializer = ClassroomSerializer(classes, many=True)
         return Response(class_serializer.data)
 
     @action(detail=True, methods=["get"])
     def get_class(self, request, pk=None):
         try:
-            classRoom = ClassroomSchedule.objects.get(pk=pk)
-        except ClassroomSchedule.DoesNotExist:
+            classRoom = Classroom.objects.get(pk=pk)
+        except Classroom.DoesNotExist:
             return Response({'message': 'Classroom schedule not found'}, status=status.HTTP_404_NOT_FOUND)
-        class_serializer = ClassroomScheduleSerializer(classRoom)
+        class_serializer = ClassroomSerializer(classRoom)
         return Response(class_serializer.data)

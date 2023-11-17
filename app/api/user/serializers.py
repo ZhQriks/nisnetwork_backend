@@ -17,7 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
             'grade_letter',
             'major1',
             'major2',
-            'standard'
+            'standard',
+            'group'
         ]
         extra_kwargs = {
             'password': {
