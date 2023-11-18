@@ -71,6 +71,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:5173",
     "https://goweb-hack.vercel.app",
+    "https://nisnetwork.vercel.app",
 ]
 
 ROOT_URLCONF = "app.urls"
