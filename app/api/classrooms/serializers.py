@@ -14,6 +14,8 @@ class ClassroomSerializer(serializers.ModelSerializer):
             'teacher_name',
             'class_order',
             'week_day',
+            'grade_letter',
+            'grade',
         ]
 
     def create_classroom(self, validated_data):
